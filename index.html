@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Reception Check-In</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+      }
+
+      h1 {
+        background-color: #0b5394;
+        color: white;
+        padding: 1rem;
+        margin: 0;
+      }
+
+      iframe {
+        border: none;
+        width: 100%;
+        height: 90vh;
+      }
+    </style>
+    <script>
+      function reloadFormAfterSubmit() {
+        const iframe = document.getElementById("checkin-form");
+
+        iframe.onload = () => {
+          const thankYouText = "Your response has been recorded.";
+          try {
+            const frameDoc = iframe.contentDocument || iframe.contentWindow.document;
+            if (frameDoc && frameDoc.body.innerText.includes(thankYouText)) {
+              setTimeout(() => {
+                iframe.src = iframe.src;
+              }, 6000); // Reload after 6 seconds
+            }
+          } catch (err) {
+            console.log("Submission not complete yet or cross-origin issue.");
+          }
+        };
+      }
+    </script>
+  </head>
+
+  <body onload="reloadFormAfterSubmit()">
+    <h1>Reception Check-In</h1>
+    <iframe
+      id="checkin-form"
+      src="https://docs.google.com/forms/d/e/1FAIpQLSc3Adt0RmlAT0NHSkfYmnhkv8xIirOBtbLvgLhKQ8-qaW5Nxw/viewform?embedded=true"
+      allowfullscreen
+    >
+      Loading…
+    </iframe>
+  </body>
+</html>
